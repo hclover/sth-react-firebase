@@ -38,13 +38,18 @@ export const deleteSection = (key) => {
 export const deleteTodoItem = (id,key) => {
   return database.ref(`/${id}/todos/${key}`).remove()
 }
+//update stt of item todo
+export const updateSttOfTodoItem = (id,key, stt) => {
+  return database.ref(`/${id}/todos/${key}`).child(`stt`).set(stt);
+}
 // add new todo item into specified section
 export const addTodoItem = (id, name, dis) => {
   return new Promise((resolve, reject) => {
     database.ref(`/${id}`).once('value').then((todo) => {
       let todos = todo.val().todos || []
       let key = database.ref(`/${id}`).push().key
-      todos.push(todoModel(key, name, dis, firebase.database.ServerValue.TIMESTAMP))
+      let stt = 'not yet'
+      todos.push(todoModel(key, name, dis, stt, firebase.database.ServerValue.TIMESTAMP))
       database.ref(`/${id}/todos`).set(todos)
         .then( res => {resolve(res)})
         .catch( error => {reject(error)})

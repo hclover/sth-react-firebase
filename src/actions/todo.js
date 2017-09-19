@@ -1,4 +1,4 @@
-import { getSectionsDB, getTodoDB, addSection,deleteSection, deleteTodoItem, addTodoItem } from 'javascripts/firebase'
+import { getSectionsDB, getTodoDB, addSection,deleteSection, updateSttOfTodoItem,deleteTodoItem, addTodoItem } from 'javascripts/firebase'
 import actionType from 'constants'
 import {push} from 'react-router-redux'
 
@@ -101,6 +101,28 @@ export const createTodoItem = (sectionId, name, dis) => {
       .catch(error => {
         dispatch({
           type: actionType.CREATE_TODO_FAILED,
+          payload: error
+        })
+      })
+   }
+}
+
+export const changeSttOfTodoItem = (id,key, stt) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionType.CHANGE_STT_TODO_REQUEST
+    })
+    updateSttOfTodoItem(id,key, stt)
+      .then(res => {
+        loadSections()(dispatch)
+        dispatch({
+          type: actionType.CHANGE_STT_TODO_SUCCESS,
+          payload: res
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: actionType.CHANGE_STT_TODO_FAILED,
           payload: error
         })
       })

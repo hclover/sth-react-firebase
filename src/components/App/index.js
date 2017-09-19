@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {loadSections, createTodoItem, createSection,removeSection, removeTodoItem,loadSpecificSection} from 'actions/todo'
+import {loadSections, createTodoItem,changeSttOfTodoItem, createSection,removeSection, removeTodoItem,loadSpecificSection} from 'actions/todo'
 import _ from 'lodash'
 import SectionList from './section-list'
 
@@ -27,6 +27,18 @@ onSubmit = (e) => {
        this.props.removeTodoItem(id, key)
   }
 
+  onItemTodoChangeSttClick = (id, key, sttNow) => {
+    let stt = ''
+    if (sttNow == 'not yet'){
+      stt = 'done'
+    }
+    else {
+      stt = 'not yet'
+    }
+    console.log(stt)
+    this.props.changeSttOfTodoItem(id, key, stt)
+  }
+
 
 render() {
     return (
@@ -36,6 +48,7 @@ render() {
           onClick={this.onSectionClick}
           onSectionRemoveClick = {this.onSectionRemoveClick}
           onItemTodoRemoveClick = {this.onItemTodoRemoveClick}
+          onItemTodoChangeSttClick = {this.onItemTodoChangeSttClick}
           />
       <form onSubmit={this.onSubmit}>
         <input ref="section-name" required/>
@@ -51,4 +64,4 @@ const mapStateToProps = (state) => {
     sections: state.todo.sections
   }
 }
-export default connect(mapStateToProps, {loadSections,createTodoItem, createSection,removeTodoItem,removeSection,loadSpecificSection })(App)
+export default connect(mapStateToProps, {loadSections,changeSttOfTodoItem,createTodoItem, createSection,removeTodoItem,removeSection,loadSpecificSection })(App)
