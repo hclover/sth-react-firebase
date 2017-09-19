@@ -6,7 +6,7 @@ export default (props) => {
     <ul>
       {
         _.map(props.sections, (section, i) =>
-        <li  key={i}> {section.name} {section.id}  {i}
+        <li  key={i}> {section.name}
                       <button   onClick={props.onSectionRemoveClick.bind(this, section.id)}
                                 type="button" className="btn btn-xs btn-danger img-circle" >&#xff38;</button>
           <ul>
