@@ -36,7 +36,7 @@ export const deleteSection = (key) => {
 }
 //delete item todo
 export const deleteTodoItem = (id,key) => {
-  return database.ref(`/`+id+`/todos`+key).remove()
+  return database.ref(`/${id}/todos/${key}`).remove()
 }
 // add new todo item into specified section
 export const addTodoItem = (id, name, dis) => {
