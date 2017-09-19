@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
-import logo from 'components/App/logo.svg';
-import './style.css';
+import {connect} from 'react-redux'
+import {loadSections, createTodoItem, createSection, loadSpecificSection} from 'actions/todo'
+import _ from 'lodash'
+import SectionList from './section-list'
+
 
 class App extends Component {
-  render() {
+  componentDidMount() {
+    this.props.loadSections()
+  }
+onSubmit = (e) => {
+    e.preventDefault()
+    let ref = this.refs['section-name']
+    let sectionName = ref.value
+    this.props.createSection(sectionName)
+    ref.value = ''
+  }
+  onSectionClick = (sectionId) => {
+      this.props.loadSpecificSection(sectionId)
+   }
+
+
+
+render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+      <SectionList sections={this.props.sections} onClick={this.onSectionClick}/>
+      <form onSubmit={this.onSubmit}>
+        <input ref="section-name" required/>
+        <button>Add new section</button>
+      </form>
+
       </div>
     );
   }
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    sections: state.todo.sections
+  }
+}
+export default connect(mapStateToProps, {loadSections,createTodoItem, createSection,loadSpecificSection })(App)
