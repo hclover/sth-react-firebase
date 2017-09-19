@@ -20,10 +20,13 @@ onSubmit = (e) => {
       this.props.loadSpecificSection(sectionId)
    }
   onSectionRemoveClick = (key) => {
+    console.log(key)
        this.props.removeSection(key)
   }
 
   onItemTodoRemoveClick = (id, key) => {
+    console.log(id)
+    console.log(key)
        this.props.removeTodoItem(id, key)
   }
 
