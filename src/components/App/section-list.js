@@ -6,11 +6,17 @@ export default (props) => {
     <ul>
       {
         _.map(props.sections, (section, i) =>
-        <li  key={i}><h3>{section.name}</h3>
+        <li  key={i}> {section.name}
+                      <button   onClick={props.onSectionRemoveClick.bind(this, section.id)}
+                                type="button" className="btn btn-xs btn-danger img-circle" >&#xff38;</button>
           <ul>
             {
               _.map(section.todos, (item, i) =>
-              <li key={i}><h4>{item.name} </h4>  {item.dis}
+              <li key={i}>{item.name}
+                          <button type="button" className="btn btn-xs btn-success img-circle" >&#x2713;</button>
+                          <button onClick={props.onItemTodoRemoveClick.bind(this, section.id, item.id)}
+                                  type="button" className="btn btn-xs btn-danger img-circle" >&#xff38;</button>
+                          <h5>{item.dis}</h5>
               </li>)
             }
           </ul>

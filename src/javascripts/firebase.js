@@ -30,6 +30,14 @@ export const addSection = (name) => {
   let model = sectionModel(key, name, firebase.database.ServerValue.TIMESTAMP)
   return database.ref('/'+ key).set(model)
 }
+// delete sections
+export const deleteSection = (key) => {
+  return database.ref('/'+ key).remove()
+}
+//delete item todo
+export const deleteTodoItem = (id,key) => {
+  return database.ref(`/${id}`+ key).remove()
+}
 // add new todo item into specified section
 export const addTodoItem = (id, name, dis) => {
   return new Promise((resolve, reject) => {

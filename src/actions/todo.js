@@ -1,4 +1,4 @@
-import { getSectionsDB, getTodoDB, addSection,  addTodoItem } from 'javascripts/firebase'
+import { getSectionsDB, getTodoDB, addSection,deleteSection, deleteTodoItem, addTodoItem } from 'javascripts/firebase'
 import actionType from 'constants'
 import {push} from 'react-router-redux'
 
@@ -63,6 +63,28 @@ export const createSection = (name) => {
    })
  }
 }
+
+export const removeSection = (key) => {
+ return dispatch => {
+  dispatch({
+   type: actionType.DELETE_SECTION_REQUEST
+  })
+  deleteSection(key)
+   .then(res => {
+    loadSections()(dispatch) //refresh the data to keep up-to-date
+    dispatch({
+     type: actionType.DELETE_SECTION_SUCCESS
+    })
+   })
+   .catch(error => {
+    dispatch({
+     type: actionType.DELETE_SECTION_FAILED,
+     payload: error
+    })
+   })
+ }
+}
+
 export const createTodoItem = (sectionId, name, dis) => {
   return (dispatch) => {
     dispatch({
@@ -83,6 +105,27 @@ export const createTodoItem = (sectionId, name, dis) => {
         })
       })
    }
+}
+
+export const removeTodoItem = (id, key) => {
+ return dispatch => {
+  dispatch({
+   type: actionType.DELETE_TODO_REQUEST
+  })
+  deleteTodoItem(id, key)
+   .then(res => {
+    loadSections()(dispatch) //refresh the data to keep up-to-date
+    dispatch({
+     type: actionType.DELETE_TODO_SUCCESS
+    })
+   })
+   .catch(error => {
+    dispatch({
+     type: actionType.DELETE_TODO_FAILED,
+     payload: error
+    })
+   })
+ }
 }
 
 export const loadSpecificSection = (sectionId) => {
